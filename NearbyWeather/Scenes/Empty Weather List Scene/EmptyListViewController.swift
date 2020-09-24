@@ -42,7 +42,7 @@ final class EmptyListViewController: UIViewController {
   // MARK: - IBActions
   
   @IBAction func didTapReloadButton(_ sender: UIButton) {
-    WeatherDataService.shared.update(withCompletionHandler: nil)
+    WeatherInformationService.shared.update(withCompletionHandler: nil)
   }
   
   // MARK: - Functions
@@ -66,6 +66,6 @@ final class EmptyListViewController: UIViewController {
     reloadButton.setTitleColor(.white, for: UIControl.State())
     reloadButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     reloadButton.layer.cornerRadius = reloadButton.bounds.height/2
-    reloadButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
+    reloadButton.layer.backgroundColor = Constants.Theme.Color.BrandColor.standardDay.cgColor
   }
 }

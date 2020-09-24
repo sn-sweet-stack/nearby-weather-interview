@@ -75,7 +75,7 @@ final class SettingsInputTableViewController: UITableViewController, Stepper {
     cell.inputTextField.ascending = true
     cell.inputTextField.maxLength = 32
     cell.inputTextField.counterColor = cell.inputTextField.textColor ?? .black
-    cell.inputTextField.limitColor = Constants.Theme.Color.BrandColors.standardDay
+    cell.inputTextField.limitColor = Constants.Theme.Color.BrandColor.standardDay
     
     return cell
   }
@@ -102,7 +102,7 @@ final class SettingsInputTableViewController: UITableViewController, Stepper {
     }
     UserDefaults.standard.set(text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     HUD.flash(.success, delay: 1.0)
-    WeatherDataService.shared.update(withCompletionHandler: nil)
+    WeatherInformationService.shared.update(withCompletionHandler: nil)
     return true
   }
 }

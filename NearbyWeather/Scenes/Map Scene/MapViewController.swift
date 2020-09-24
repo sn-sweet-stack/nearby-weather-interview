@@ -75,7 +75,7 @@ final class MapViewController: UIViewController, Stepper {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    selectedBookmarkedLocation = WeatherDataService.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
+    selectedBookmarkedLocation = WeatherInformationService.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
     
     focusOnAvailableLocation()
   }
@@ -96,13 +96,13 @@ private extension MapViewController {
     // calculate current annotations
     weatherLocationMapAnnotations = [WeatherLocationMapAnnotation]()
     
-    let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataService.shared.bookmarkedWeatherDataObjects?.compactMap {
+    let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherInformationService.shared.bookmarkedWeatherDataObjects?.compactMap {
       guard let weatherDTO = $0.weatherInformationDTO else { return nil }
       return WeatherLocationMapAnnotation(weatherDTO: weatherDTO, isBookmark: true)
     }
     weatherLocationMapAnnotations.append(contentsOf: bookmarkedLocationAnnotations ?? [WeatherLocationMapAnnotation]())
     
-    let nearbyocationAnnotations = WeatherDataService.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
+    let nearbyocationAnnotations = WeatherInformationService.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
       return WeatherLocationMapAnnotation(weatherDTO: $0, isBookmark: false)
     }
     weatherLocationMapAnnotations.append(contentsOf: nearbyocationAnnotations ?? [WeatherLocationMapAnnotation]())
@@ -158,7 +158,7 @@ private extension MapViewController {
   func configureButtons() {
     navigationItem.leftBarButtonItem = mapTypeBarButton
     
-    guard WeatherDataService.shared.hasDisplayableWeatherData else {
+    guard WeatherInformationService.shared.hasDisplayableWeatherData else {
       navigationItem.rightBarButtonItems = nil
       return
     }
@@ -194,7 +194,7 @@ private extension MapViewController {
   }
   
   @objc func focusLocationButtonTapped(_ sender: UIBarButtonItem) {
-    guard let bookmarkedWeatherDataObjects = WeatherDataService.shared.bookmarkedWeatherDataObjects?.compactMap({
+    guard let bookmarkedWeatherDataObjects = WeatherInformationService.shared.bookmarkedWeatherDataObjects?.compactMap({
       return $0.weatherInformationDTO
     }) else {
       return
@@ -241,8 +241,8 @@ extension MapViewController: MKMapViewDelegate {
     
     if annotation.isBookmark {
       fillColor = annotation.isDayTime ?? true
-        ? Constants.Theme.Color.BrandColors.standardDay
-        : Constants.Theme.Color.BrandColors.standardNight // default to blue colored cells
+        ? Constants.Theme.Color.BrandColor.standardDay
+        : Constants.Theme.Color.BrandColor.standardNight // default to blue colored cells
       
       textColor = .white
     } else {
